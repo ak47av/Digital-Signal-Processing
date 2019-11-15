@@ -86,6 +86,10 @@ def multiply(a,b):
     out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d)))))
     return out
 
+def reverse(sig):
+    x = sig.copy()
+    x.reverse()
+    return x
 
 
 arr = [0,1,2,3]
