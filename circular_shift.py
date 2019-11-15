@@ -47,7 +47,14 @@ def shift_time_right(xn,l):
     out = idft(shifted)
     return out
 
-def shift_freq_right(xk,)
+def shift_freq_right(xk,l):
+    N = len(xk)
+    xn = idft(xk)
+    shifted = []
+    for n in range(N):
+        shifted.append(np.exp(1j*2*np.pi*n*l/N)*xn[n])
+    out = dft(shifted)
+    return out
 
 def circular_convolve(x1,x2):
     x = x1.copy()
@@ -65,14 +72,26 @@ def circular_convolve(x1,x2):
     y = idft(yk)
     return y 
 
+def multiply(a,b):
+    c = a.copy()
+    d = b.copy()
+    C = len(c)
+    D = len(d)
+    max = C if C>D else D
+    for i in range(C,max):
+        c.append(0)
+    for i in range(D,max):
+        d.append(0)
+    N = len(c) if len(c)>len(d) else len(d)
+    out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d)))))
+    return out
+
 
 
 arr = [0,1,2,3]
-print(shift_time_right(arr,2))
+x = [1,0,0]
+h = [1,2,3]
 
-x = [3,4,5,6,7]
-h = [5,6,7]
-print(circular_convolve(x,h))
-print(convolve(x,h))
+
 
 
