@@ -92,7 +92,7 @@ def transform(mat,xn):
         output.append(temp)
     return output
 
-matrix = mat(8)
+matrix = mat(4)
 print(matrix)
 inv_matrix = (1/4)*np.conjugate(matrix)
 print(inv_matrix)
