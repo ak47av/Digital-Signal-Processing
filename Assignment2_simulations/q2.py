@@ -2,16 +2,19 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import math
 
+def pad(arr,n):
+    np_arr = np.zeros(len(arr)+n)
+    np.put(np_arr,range(len(arr)),arr)
+    return np_arr
+
 def convolve(x1,x2):
     x = x1.copy()
     h = x2.copy()
     X = len(x1)
     H = len(x2)
     output = np.zeros(X+H-1)
-    for i in range(X,X+H-1):
-        x.append(0)
-    for i in range(H,X+H-1):
-        h.append(0) 
+    x = pad(x,X+H-1-X)
+    h = pad(h,X+H-1-H)
     for i in range(0,X+H-1):
         output[i] = 0
         for j in range(i+1):
@@ -101,6 +104,6 @@ plt.subplot(211)
 plt.plot(convolve(x,x))
 
 plt.subplot(212)
-plt.plot(circular_convolve(x,x,5))
+plt.plot(circular_convolve(x,x,39))
 
 plt.show()
