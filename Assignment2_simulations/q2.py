@@ -56,15 +56,14 @@ def shift_freq_right(xk,l):
     out = dft(shifted)
     return out
 
-def circular_convolve(x1,x2):
+def circular_convolve(x1,x2,N):
     x = x1.copy()
     h = x2.copy()
     X1 = len(x1)
     X2 = len(x2)
-    max = X1 if X1>X2 else X2
-    for i in range(X1,max):
+    for i in range(X1,N):
         x.append(0)
-    for i in range(X2,max):
+    for i in range(X2,N):
         h.append(0) 
     xk = np.asarray(dft(x))
     hk = np.asarray(dft(h))
@@ -83,7 +82,7 @@ def multiply(a,b):
     for i in range(D,max):
         d.append(0)
     N = len(c) if len(c)>len(d) else len(d)
-    out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d)))))
+    out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d),N))))
     return out
 
 def reverse(sig):
@@ -91,11 +90,17 @@ def reverse(sig):
     x.reverse()
     return x
 
+def step(n):
+    return 1 * (n>0)
 
-arr = [0,1,2,3]
-x = [1,0,0]
-h = [1,2,3]
+n = np.arange(50)
+x = step(n)-step(n-21)
+y = [1,1,1]
 
+plt.subplot(211)
+plt.plot(convolve(x,x))
 
+plt.subplot(212)
+plt.plot(circular_convolve(x,x,5))
 
-
+plt.show()

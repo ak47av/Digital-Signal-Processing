@@ -23,10 +23,16 @@ def idft(xk):
         output.append(xn/N)
     return output
 
-n = np.arange(0,10)
 
-sig = np.asarray([0,1,2,3])
+t = np.arange(0,7)
+x = (1/4)**t
+y = np.cos(3*np.pi*t/8)
 
-plt.stem(idft(dft(sig)))
-print(dft(sig))
+X1 = np.asarray(dft(x))
+X2 = np.asarray(dft(y))
+X3 = X1*X2
+x3 = idft(X3)
+print(X1)
+print(X2)
+print(x3)
 plt.show()
