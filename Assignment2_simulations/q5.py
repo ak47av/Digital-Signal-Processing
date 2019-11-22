@@ -1,7 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def pad(arr,n):
+    np_arr = np.zeros(len(arr)+n)
+    np.put(np_arr,range(len(arr)),arr)
+    return np_arr
+
 def dft(xn,N):
+    if (N-len(xn)>0):    
+        xn = pad(xn,N-len(xn))
     output = []
     for k in range(N):
         Xk = 0
@@ -11,6 +18,8 @@ def dft(xn,N):
     return output
 
 def idft(xk,N):
+    if (N-len(xk)>0):
+        xk = pad(xk,N-len(xk))
     output = []
     for n in range(N):
         xn = 0
@@ -19,9 +28,12 @@ def idft(xk,N):
         output.append(xn/N)
     return output
 
+#1
 x = [1,1,1]
 print(dft(x,2))
 
+M = 4
+x = np.ones(M)
+plt.stem(dft(x,32))
 
-x = [1,1,1,1,1,1]
-print(dft(x,10))
+plt.show()
