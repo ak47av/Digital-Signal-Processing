@@ -32,8 +32,15 @@ def idft(xk,N):
 x = [1,1,1]
 print(dft(x,2))
 
-M = 4
+#3
+M = 3
+N = 32
 x = np.ones(M)
-plt.stem(dft(x,32))
-
+plt.figure(2)
+plt.subplot(211)
+plt.stem(np.abs(dft(x,N)))
+M=4
+x = np.ones(M)
+plt.subplot(212)
+plt.stem(np.abs(dft(x,N)))
 plt.show()
