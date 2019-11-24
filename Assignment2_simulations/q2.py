@@ -21,26 +21,6 @@ def convolve(x1,x2):
             output[i] += x[j]*h[i-j]
     return output 
 
-def dft(xn):
-    N = len(xn)
-    output = []
-    for k in range(N):
-        Xk = 0
-        for n in range (N):
-            Xk += xn[n]*(np.cos(2*np.pi*k*n/N)-(1j*np.sin(2*np.pi*k*n/N)))
-        output.append(Xk)
-    return output
-
-def idft(xk):
-    N = len(xk)
-    output = []
-    for n in range(N):
-        xn = 0
-        for k in range(N):
-            xn += xk[k]*(np.cos(2*np.pi*k*n/N)+(1j*np.sin(2*np.pi*k*n/N)))
-        output.append(xn/N)
-    return output
-
 def circular_convolve1(x1,x2,N):
     x = x1.copy()
     h = x2.copy()
@@ -57,19 +37,6 @@ def circular_convolve1(x1,x2,N):
         temp = 0
     return output
 
-def circular_convolve(x1,x2,N):
-    x = x1.copy()
-    h = x2.copy()
-    X = len(x1)
-    H = len(x2)
-    x = pad(x,N-X)
-    h = pad(h,N-H)
-    xk = np.asarray(dft(x))
-    hk = np.asarray(dft(h))
-    yk = xk*hk
-    y = idft(yk)
-    return y 
-
 def step(n):
     return 1 * (n>=0)
 
@@ -77,13 +44,10 @@ n = np.arange(50)
 x = step(n)-step(n-21)
 x = np.trim_zeros(x,'b')
 
-plt.subplot(311)
+plt.subplot(211)
 plt.plot(convolve(x,x))
 
-plt.subplot(312)
+plt.subplot(212)
 plt.stem(circular_convolve1(x,x,41)) #using circular shifting
-
-plt.subplot(313)
-plt.stem(circular_convolve(x,x,39)) #using dft and idft
 
 plt.show()

@@ -41,7 +41,22 @@ def idft(xk):
         output.append(xn/N)
     return output
 
-
+def circular_convolve1(x1,x2,N):
+    x = x1.copy()
+    h = x2.copy()
+    X1 = len(x1)
+    X2 = len(x2)
+    x = pad(x,N-X1)
+    h = pad(h,N-X2)
+    H = h[::-1]
+    output= []
+    temp = 0
+    for i in range(0,N):
+        temp = np.sum(x*np.roll(H,-i))
+        output.append(temp)
+        temp = 0
+    return output
+    
 def circular_convolve(x1,x2,N):
     x = x1.copy()
     h = x2.copy()
