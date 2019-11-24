@@ -77,10 +77,13 @@ n = np.arange(50)
 x = step(n)-step(n-21)
 x = np.trim_zeros(x,'b')
 
-plt.subplot(211)
-plt.plot(np.convolve(x,x))
+plt.subplot(311)
+plt.plot(convolve(x,x))
 
-plt.subplot(212)
-plt.stem(circular_convolve1(x,x,41))
+plt.subplot(312)
+plt.stem(circular_convolve1(x,x,41)) #using circular shifting
+
+plt.subplot(313)
+plt.stem(circular_convolve(x,x,39)) #using dft and idft
 
 plt.show()
