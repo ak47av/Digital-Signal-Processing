@@ -49,14 +49,16 @@ def circular_convolve1(x1,x2,N):
     x = pad(x,N-X1)
     h = pad(h,N-X2)
     H = h[::-1]
+    print(H)
     output= []
     temp = 0
     for i in range(0,N):
-        temp = np.sum(x*np.roll(H,-i))
+        print(i)
+        temp = np.sum(x*np.roll(H,i+1))
+        print(np.roll(H,i))
         output.append(temp)
-        temp = 0
     return output
-    
+
 def circular_convolve(x1,x2,N):
     x = x1.copy()
     h = x2.copy()
@@ -69,15 +71,6 @@ def circular_convolve(x1,x2,N):
     yk = xk*hk
     y = idft(yk)
     return y 
-
-def multiply(a,b):
-    c = a.copy()
-    d = b.copy()
-    N = len(c) if len(c)>len(d) else len(d)
-    c = pad(c,N-len(c))
-    d = pad(d,N-len(d))
-    out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d),N))))
-    return out
 
 def reverse(sig):
     x = sig.copy()
@@ -101,9 +94,9 @@ plt.subplot(313)
 plt.stem(linear_convolution)
 
 #3
-N_4 = circular_convolve(x,y,4)
-N_7 = circular_convolve(x,y,7)
-N_10 = circular_convolve(x,y,10)
+N_4 = circular_convolve1(x,y,4)
+N_7 = circular_convolve1(x,y,7)
+N_10 = circular_convolve1(x,y,10)
 
 plt.figure(2)
 plt.subplot(311)
@@ -113,8 +106,18 @@ plt.stem(N_7)
 plt.subplot(313)
 plt.stem(N_10)
 
+#4
 plt.figure(3)
+N_4 = circular_convolve(x,y,4)
+N_7 = circular_convolve(x,y,7)
+N_10 = circular_convolve(x,y,10)
 
+plt.subplot(311)
+plt.stem(N_4)
+plt.subplot(312)
+plt.stem(N_7)
+plt.subplot(313)
+plt.stem(N_10)
 
 plt.show()
 

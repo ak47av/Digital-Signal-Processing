@@ -29,12 +29,14 @@ def circular_convolve1(x1,x2,N):
     x = pad(x,N-X1)
     h = pad(h,N-X2)
     H = h[::-1]
+    print(H)
     output= []
     temp = 0
     for i in range(0,N):
-        temp = np.sum(x*np.roll(H,-i))
+        print(i)
+        temp = np.sum(x*np.roll(H,i+1))
+        print(np.roll(H,i))
         output.append(temp)
-        temp = 0
     return output
 
 def step(n):
