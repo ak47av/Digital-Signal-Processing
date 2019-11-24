@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft,ifft
+
 n = np.arange(0,512)
 x = np.sin(np.pi*n/32)
 

@@ -41,69 +41,46 @@ def idft(xk):
         output.append(xn/N)
     return output
 
-def shift_time_right(xn,l):
-    N = len(xn)
-    xk = dft(xn)
-    shifted = []
-    for k in range(N):
-        shifted.append(np.exp(-1j*2*np.pi*k*l/N)*xk[k])
-    out = idft(shifted)
-    return out
-
-def shift_freq_right(xk,l):
-    N = len(xk)
-    xn = idft(xk)
-    shifted = []
-    for n in range(N):
-        shifted.append(np.exp(1j*2*np.pi*n*l/N)*xn[n])
-    out = dft(shifted)
-    return out
-
-def circular_convolve(x1,x2,N):
+def circular_convolve1(x1,x2,N):
     x = x1.copy()
     h = x2.copy()
     X1 = len(x1)
     X2 = len(x2)
-    for i in range(X1,N):
-        x.append(0)
-    for i in range(X2,N):
-        h.append(0) 
+    x = pad(x,N-X1)
+    h = pad(h,N-X2)
+    H = h[::-1]
+    output= []
+    temp = 0
+    for i in range(0,N):
+        temp = np.sum(x*np.roll(H,-i))
+        output.append(temp)
+        temp = 0
+    return output
+
+def circular_convolve(x1,x2,N):
+    x = x1.copy()
+    h = x2.copy()
+    X = len(x1)
+    H = len(x2)
+    x = pad(x,N-X)
+    h = pad(h,N-H)
     xk = np.asarray(dft(x))
     hk = np.asarray(dft(h))
     yk = xk*hk
     y = idft(yk)
     return y 
 
-def multiply(a,b):
-    c = a.copy()
-    d = b.copy()
-    C = len(c)
-    D = len(d)
-    max = C if C>D else D
-    for i in range(C,max):
-        c.append(0)
-    for i in range(D,max):
-        d.append(0)
-    N = len(c) if len(c)>len(d) else len(d)
-    out = 1/N*(np.asarray(idft(circular_convolve(dft(c),dft(d),N))))
-    return out
-
-def reverse(sig):
-    x = sig.copy()
-    x.reverse()
-    return x
-
 def step(n):
-    return 1 * (n>0)
+    return 1 * (n>=0)
 
 n = np.arange(50)
 x = step(n)-step(n-21)
-y = [1,1,1]
+x = np.trim_zeros(x,'b')
 
 plt.subplot(211)
-plt.plot(convolve(x,x))
+plt.plot(np.convolve(x,x))
 
 plt.subplot(212)
-plt.plot(circular_convolve(x,x,39))
+plt.stem(circular_convolve1(x,x,41))
 
 plt.show()
