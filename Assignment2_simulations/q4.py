@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt 
 def twiddle(kn,N):
     wn = np.exp(-1j*2*np.pi*kn/N)
     return wn
@@ -21,5 +22,13 @@ def transform(mat,xn):
     return output
 
 x = [0.146,0.5,0.853,1,1,0.853,0.5,0.146]
-matrix = mat(8)
-print(transform(matrix,x))
+matrix = (np.around(mat(8),decimals=3))
+print(matrix)
+plt.subplot(211)
+plt.title("")
+plt.ylabel("x[n]")
+plt.stem(x)
+plt.subplot(212)
+plt.ylabel("linear transformation")
+plt.stem(transform(matrix,x))
+plt.show()

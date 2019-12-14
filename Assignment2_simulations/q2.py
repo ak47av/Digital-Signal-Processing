@@ -29,13 +29,10 @@ def circular_convolve1(x1,x2,N):
     x = pad(x,N-X1)
     h = pad(h,N-X2)
     H = h[::-1]
-    print(H)
     output= []
     temp = 0
     for i in range(0,N):
-        print(i)
         temp = np.sum(x*np.roll(H,i+1))
-        print(np.roll(H,i))
         output.append(temp)
     return output
 
@@ -45,11 +42,15 @@ def step(n):
 n = np.arange(50)
 x = step(n)-step(n-21)
 x = np.trim_zeros(x,'b')
+plt.subplot(311)
+plt.stem(x)
+plt.subplot(312)
+plt.stem(convolve(x,x))
+plt.ylabel("using linear")
+plt.subplot(313)
+plt.stem(circular_convolve1(x,x,41))
+plt.ylabel("using circular") #using circular shifting
 
-plt.subplot(211)
-plt.plot(convolve(x,x))
-
-plt.subplot(212)
-plt.stem(circular_convolve1(x,x,41)) #using circular shifting
+print(circular_convolve1([2,1,2,1],[1,2,3,4],4))
 
 plt.show()

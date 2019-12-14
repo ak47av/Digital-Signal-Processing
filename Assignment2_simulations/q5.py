@@ -37,10 +37,13 @@ M = 3
 N = 32
 x = np.ones(M)
 plt.figure(2)
+plt.title("Magnitude Spectra for M=3,4")
 plt.subplot(211)
+plt.ylabel("DFT M=3 N=32")
 plt.stem(np.abs(dft(x,N)))
 M=4
 x = np.ones(M)
 plt.subplot(212)
+plt.ylabel("DFT M=4 N=32")
 plt.stem(np.abs(dft(x,N)))
 plt.show()
