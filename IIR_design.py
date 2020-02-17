@@ -2,7 +2,7 @@ from scipy import signal
 import matplotlib.pyplot as plt
 import numpy as np
 
-b, a = signal.iirfilter(4,0.2,rp=1,rs=50,btype='lowpass',ftype='butter')
+b, a = signal.iirfilter(10,[0.2,0.5],rp=5,rs=50,btype='bandstop',ftype='cheby2')
 
 w, h = signal.freqz(b,a)
 plt.figure(1)
