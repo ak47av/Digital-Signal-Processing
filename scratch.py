@@ -1,12 +1,15 @@
-from scipy.fftpack import fft,ifft
+import matplotlib.pyplot as plt
 import numpy as np
-print(fft([5+1j,6+2j,7+3j,8+4j]))
-X = np.asarray([26+10j,-4,-2-2j,-4j])
-Xconjrev = np.asarray([26-10j,4j,-2+2j,-4])
-X1 = 0.5*(X+Xconjrev)
-X2 = -1j*0.5*(X-Xconjrev)
-print(X1)
-print(fft([5,6,7,8]))
 
-print(X2)
-print(fft([1,2,3,4]))
+Vce = [0,0.095,0.102,0.111,0.118,0.13,0.137,0.159,0.174,0.207,0.293,0.467]
+Ic = [0.5,0.6,0.7,0.73,0.83,0.94,1.04,1.14,1.25,1.36,1.44,1.54]
+
+plt.figure(1)
+plt.plot(Vce,Ic)
+
+Vce = [0.005,0.027,0.039,0.048,0.055,0.061,0.066,0.0710,0.0750,0.078,0.083,0.085,0.089,0.091,0.094,0.097]
+Ic = [0,0.11,0.21,0.31,0.42,0.52,0.63,0.74,0.85,0.94,1.07,1.15,1.26,1.36,1.47,1.57]
+
+plt.figure(2)
+plt.plot(Vce,Ic)
+plt.show()
